@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id='library_game_action' model='ir.actions.act_window'>
+        <field name="name">Games Library</field>
+        <field name="res_model">library.game</field>
+        <field name="view_mode">kanban,tree,form,calendar</field>
+    </record>
+
+    <record id='library_game_calendar_action' model='ir.actions.act_window'>
+        <field name="name">Game Library</field>
+        <field name="res_model">library.game</field>
+        <field name="view_mode">calendar</field>
+    </record>
+
+    <menuitem name="My Game Library" id="library_base_menu" />
+    <menuitem name="Games" id="library_game_menu" parent="library_base_menu" action="library_game_action"/>
+    <menuitem name="Calendar" id="library_game_menu_calendar" parent="library_base_menu" action="library_game_calendar_action"/>
+
+   <!-- Calendar View -->
+   <record id="library_game_view_calendar" model="ir.ui.view">
+    <field name="name">Game Library Calendar</field>
+    <field name="model">library.game</field>
+    <field name="arch" type="xml">
+        <calendar string="Release Calendar" date_start="entry_date" mode="month">
+            <field name="name"/>
+        </calendar>
+    </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="library_game_rent_view_kanban" model="ir.ui.view">
+        <field name="name">Kanban Games</field>
+        <field name="model">library.game</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="rented_name" />
+                <field name="rented_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_card">
+                                    <div>
+                                        <i class="fa fa-tag"/>
+                                        <b>
+                                            <field name="category_id" />
+                                        </b>
+                                    </div>
+                                    <div class="text-muted">
+                                        <i class="fa fa-game"/>
+                                        <field name="name" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>  
+
+    <!-- Form View -->
+    <record id="library_game_view_form" model="ir.ui.view">
+        <field name="name">Game Library Form</field>
+        <field name="model">library.game</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="make_available" string="Make Available" type="object"/>
+                    <button name="make_borrowed"  string="Make Borrowed" type="object"/>
+                    <button name="make_lost"  string="Make Lost" type="object"/>
+                    <button name="create_categories" string="Create Categories" type="object"/>
+                    <button name="change_entry_date" string="Update Date" type="object"/>
+                    <button name="find_game" string="Find Game" type="object"/>
+                    <field name="state" widget="statusbar"/>
+                </header>                
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="dev_name"/>
+                        <field name="platform"/>
+                        <field name="entry_date"/>
+                        <field name="original_cost"/>
+                        <field name="actual_cost"/>                        
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree(list) View -->
+    <record id="library_game_view_tree" model="ir.ui.view">
+        <field name="name">Game Library List</field>
+        <field name="model">library.game</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="library_game_view_search" model="ir.ui.view">
+        <field name="name">Game Library Search</field>
+        <field name="model">library.game</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="dev_name"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>
